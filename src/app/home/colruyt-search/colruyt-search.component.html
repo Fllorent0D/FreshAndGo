@@ -1,0 +1,11 @@
+<app-loader [isLoading]="isLoading"></app-loader>
+<div class="list-group">
+    <a class="list-group-item d-flex justify-content-between align-items-center"
+       *ngFor="let item of (colruytItems | async)">
+        <app-colruyt-search-item
+                [item]="item"
+                (addToBasket)="addToBasket($event)">
+        </app-colruyt-search-item>
+    </a>
+</div>
+
