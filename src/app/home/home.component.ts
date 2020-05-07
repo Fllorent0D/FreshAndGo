@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { finalize } from 'rxjs/operators';
-
-import { QuoteService } from './quote.service';
 import { HelloFreshService } from '@shared/hello-fresh/hello-fresh.service';
 import { HelloFreshListResponse, Ingredient, Recipe } from '@shared/hello-fresh/hello-fresh.models';
 import { Observable, Subject } from 'rxjs';
-import { ColruytAddToBasketItem } from '@app/home/colruyt-search/colruyt-search-item/colruyt-search-item.component';
-import { ColruytService } from '@shared/colruyt/colruyt.service';
+import { ColruytSearchComponent } from '@app/home/colruyt-search/colruyt-search.component';
+import { BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-home',
@@ -21,12 +18,19 @@ export class HomeComponent implements OnInit {
 
 
   constructor(
-    private helloFreshService: HelloFreshService
+    private helloFreshService: HelloFreshService,
+    private modalService: BsModalService
   ) {
   }
 
   ngOnInit() {
     this.helloFreshRecipes$ = this.helloFreshService.fetchRecipes();
+
+  }
+
+  openSearch(ingredient: Ingredient) {
+    const modalRef = this.modalService.show(ColruytSearchComponent, { class: 'modal-lg' });
+    modalRef.content.ingredient = ingredient;
   }
 
 

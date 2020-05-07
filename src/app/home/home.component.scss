@@ -1,9 +1,5 @@
-.logo {
-  width: 100px;
-}
-
-q {
-  font-style: italic;
-  font-size: 1.2rem;
-  quotes: "« " " »";
+.list-view {
+  height: calc(100vh - 56px);
+  padding: 0;
+  overflow: auto;
 }

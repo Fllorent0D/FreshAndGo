@@ -1,13 +1,13 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-5">
-            <h3>Hello Fresh</h3>
+        <div class="col-3 overflow-auto list-view m-0 p-O">
             <app-hello-fresh-recipe-list
                     [recipes]="helloFreshRecipes$ | async"
                     [activeRecipe]="activeRecipe$ | async"
                     (recipeClicked)="activeRecipe$.next($event)"
             ></app-hello-fresh-recipe-list>
         </div>
+        <!--
         <div class="col-2">
             <h3>Ingredients</h3>
 
@@ -17,12 +17,21 @@
                 (ingredientsClicked)="activeIngredients$.next($event)">
             </app-hello-fresh-recipe-ingredients-list>
         </div>
-        <div class="col-5">
-            <h3>Colruyt</h3>
+        <h3>Colruyt</h3>
+        -->
+        <div class="col-9 overflow-auto list-view">
+            <!--
             <app-colruyt-search
                 [ingredient]="activeIngredients$ | async"
                 [activeRecipe]="activeRecipe$ | async"
             ></app-colruyt-search>
+            -->
+            <app-hello-fresh-recipe-details
+                    [recipe]="activeRecipe$ |async"
+                    (addToBasket)="openSearch($event)"
+            >
+
+            </app-hello-fresh-recipe-details>
         </div>
     </div>
 </div>

@@ -18,7 +18,7 @@ import {
 })
 export class ColruytService {
 
-  private oAuth = 'a3b256fc3a7f0777ca101de0c54df4b5a95269b59ca2ce09d05c4079510fe5e15c1c68c712e707767380f40a5bd69bf46b0c9e14fddb0569aa9803ba93603012';
+  private oAuth = 'a3b256fc3a7f0777ca101de0c54df4b5a95269b59ca2ce09d05c4079510fe5e15c1c68c712e70776b9c4a3138c71b490d23ba0014ebae96a22fc4ae8cb79e324';
 
 
   constructor(

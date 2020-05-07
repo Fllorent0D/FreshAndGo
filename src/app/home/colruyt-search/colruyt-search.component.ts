@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { ColruytSearchItem } from '@shared/colruyt/colruyt.model';
 import { ColruytAddToBasketItem } from '@app/home/colruyt-search/colruyt-search-item/colruyt-search-item.component';
 import { ToastrService } from 'ngx-toastr';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-colruyt-search',
@@ -28,7 +29,8 @@ export class ColruytSearchComponent implements OnInit {
 
 
   constructor(private colruytService: ColruytService,
-              private toastr: ToastrService) {
+              private toastr: ToastrService,
+              public bsModalRef: BsModalRef) {
   }
 
   ngOnInit(): void {
@@ -44,10 +46,10 @@ export class ColruytSearchComponent implements OnInit {
   }
 
   addToBasket(basketItem: ColruytAddToBasketItem) {
-
-    this.colruytService.addToBasket(basketItem.item.id, basketItem.quantity.unit, basketItem.quantity.quantity, this.activeRecipe.name)
+    this.colruytService.addToBasket(basketItem.item.id, basketItem.quantity.unit, basketItem.quantity.quantity)
       .subscribe((response) => {
         this.toastr.success(`Prix ${response.lineTotalPrice}€`, 'Produit ajouté au panier!');
+        this.bsModalRef.hide();
       }, (err) => {
         this.toastr.error('Erreur lors de l\'ajout!', 'Erreur');
 

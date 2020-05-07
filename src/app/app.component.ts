@@ -8,13 +8,14 @@ import { filter, map, switchMap } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { Logger, untilDestroyed } from '@core';
 import { I18nService } from '@app/i18n';
+import { setTheme } from 'ngx-bootstrap/utils';
 
 const log = new Logger('App');
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
   constructor(
@@ -23,9 +24,11 @@ export class AppComponent implements OnInit, OnDestroy {
     private titleService: Title,
     private translateService: TranslateService,
     private i18nService: I18nService
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
+    setTheme('bs4');
     // Setup logger
     if (environment.production) {
       Logger.enableProductionMode();

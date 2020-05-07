@@ -17,6 +17,8 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr-BE';
+import { NgxsModule } from '@ngxs/store';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 
 registerLocaleData(localeFr, 'fr-BE');
 @NgModule({

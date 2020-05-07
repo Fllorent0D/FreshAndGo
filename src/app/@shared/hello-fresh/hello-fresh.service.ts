@@ -18,7 +18,7 @@ export class HelloFreshService {
   }
 
   fetchRecipes(): Observable<Recipe[]> {
-    return this.httpClient.get<HelloFreshListResponse<Recipe>>(environment.helloFreshGW + '/recipes/recipes?country=be&locale=fr-BE', {
+    return this.httpClient.get<HelloFreshListResponse<Recipe>>(environment.helloFreshGW + '/recipes/recipes?country=be&skip=20&locale=fr-BE', {
       headers: {
         'Authorization': `Bearer ${this.apiToken}`
       }

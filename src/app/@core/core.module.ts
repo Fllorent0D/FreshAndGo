@@ -10,13 +10,29 @@ import { ErrorHandlerInterceptor } from './http/error-handler.interceptor';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxsModule } from '@ngxs/store';
+import { environment } from '@env/environment';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
-  imports: [BrowserAnimationsModule, CommonModule, HttpClientModule, TranslateModule, RouterModule, ReactiveFormsModule, ToastrModule.forRoot({
-    timeOut: 10000,
-    positionClass: 'toast-bottom-right',
-    preventDuplicates: true
-  })],
+  imports: [
+    BrowserAnimationsModule,
+    CommonModule,
+    HttpClientModule,
+    TranslateModule,
+    RouterModule,
+    ModalModule.forRoot(),
+    NgxsModule.forRoot([], {
+      developmentMode: !environment.production
+    }),
+    NgxsReduxDevtoolsPluginModule.forRoot(),
+    ReactiveFormsModule,
+    ToastrModule.forRoot({
+      timeOut: 10000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true
+    })],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

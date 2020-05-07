@@ -13,9 +13,19 @@ import { ColruytSearchComponent } from './colruyt-search/colruyt-search.componen
 import { ColruytAddToBasketComponent } from './colruyt-search/colruyt-add-to-basket/colruyt-add-to-basket.component';
 import { ColruytSearchItemComponent } from './colruyt-search/colruyt-search-item/colruyt-search-item.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HelloFreshRecipeDetailsComponent } from './hello-fresh-recipe-details/hello-fresh-recipe-details.component';
 
 @NgModule({
   imports: [CommonModule, TranslateModule, CoreModule, SharedModule, HomeRoutingModule, ReactiveFormsModule],
-  declarations: [HomeComponent, HelloFreshRecipeListComponent, HelloFreshRecipeIngredientsListComponent, ColruytSearchComponent, ColruytAddToBasketComponent, ColruytSearchItemComponent],
+  declarations: [
+    HomeComponent,
+    HelloFreshRecipeListComponent,
+    HelloFreshRecipeIngredientsListComponent,
+    ColruytSearchComponent,
+    ColruytAddToBasketComponent,
+    ColruytSearchItemComponent,
+    HelloFreshRecipeDetailsComponent],
+  entryComponents: [ColruytSearchComponent]
 })
-export class HomeModule {}
+export class HomeModule {
+}
