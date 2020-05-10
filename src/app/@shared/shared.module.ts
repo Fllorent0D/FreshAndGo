@@ -2,19 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { LoaderComponent } from './loader/loader.component';
-import { HelloFreshService } from '@shared/hello-fresh/hello-fresh.service';
-import { ColruytService } from '@shared/colruyt/colruyt.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
+import { NgxUiLoaderModule } from 'ngx-ui-loader';
 
 @NgModule({
-  imports: [CommonModule],
+  imports: [CommonModule, NgxUiLoaderModule],
   declarations: [LoaderComponent],
-  providers: [
-    HelloFreshService,
-    ColruytService,
-    BsModalService
-  ],
-  exports: [LoaderComponent]
+  providers: [BsModalService],
+  exports: [LoaderComponent, NgxUiLoaderModule],
 })
-export class SharedModule {
-}
+export class SharedModule {}

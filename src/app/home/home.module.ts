@@ -14,9 +14,21 @@ import { ColruytAddToBasketComponent } from './colruyt-search/colruyt-add-to-bas
 import { ColruytSearchItemComponent } from './colruyt-search/colruyt-search-item/colruyt-search-item.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HelloFreshRecipeDetailsComponent } from './hello-fresh-recipe-details/hello-fresh-recipe-details.component';
+import { NgxUiLoaderModule } from 'ngx-ui-loader';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 @NgModule({
-  imports: [CommonModule, TranslateModule, CoreModule, SharedModule, HomeRoutingModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    TranslateModule,
+    CoreModule,
+    SharedModule,
+    HomeRoutingModule,
+    ReactiveFormsModule,
+    ModalModule.forRoot(),
+    BsDropdownModule.forRoot()
+  ],
   declarations: [
     HomeComponent,
     HelloFreshRecipeListComponent,
@@ -24,7 +36,8 @@ import { HelloFreshRecipeDetailsComponent } from './hello-fresh-recipe-details/h
     ColruytSearchComponent,
     ColruytAddToBasketComponent,
     ColruytSearchItemComponent,
-    HelloFreshRecipeDetailsComponent],
+    HelloFreshRecipeDetailsComponent
+  ],
   entryComponents: [ColruytSearchComponent]
 })
 export class HomeModule {

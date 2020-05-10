@@ -1,24 +1,23 @@
-
+<div style="position: relative;" class="container">
+  <!-- It is important to set position of parent container to "relative" -->
+  <div>
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Chercher produit Colruyt</h4>
-        <button type="button" class="close" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>    <app-loader [isLoading]="isLoading"></app-loader>
+      <h4 class="modal-title" id="modal-basic-title">Chercher produit Colruyt</h4>
+      <button type="button" class="close" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
 
-    <div class="modal-body">
-        <div class="list-group">
-            <a class="list-group-item d-flex justify-content-between align-items-center"
-               *ngFor="let item of (colruytItems | async)">
-                <app-colruyt-search-item
-                        [item]="item"
-                        (addToBasket)="addToBasket($event)">
-                </app-colruyt-search-item>
-            </a>
-        </div>
-
-
+    <div class="modal-body" ngxUiLoaderBlurred>
+      <div class="list-group">
+        <a class="list-group-item" *ngFor="let item of colruytItems | async">
+          <app-colruyt-search-item [item]="item" (addToBasket)="addToBasket($event)"> </app-colruyt-search-item>
+        </a>
+      </div>
+      <ngx-ui-loader [loaderId]="'loader-01'"></ngx-ui-loader>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" >Save</button>
+      <button type="button" class="btn btn-outline-dark">Save</button>
     </div>
+  </div>
+</div>

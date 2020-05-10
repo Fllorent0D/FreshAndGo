@@ -15,7 +15,7 @@ const log = new Logger('App');
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, OnDestroy {
   constructor(
@@ -24,8 +24,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private titleService: Title,
     private translateService: TranslateService,
     private i18nService: I18nService
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     setTheme('bs4');

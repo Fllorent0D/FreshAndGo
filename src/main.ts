@@ -18,7 +18,9 @@ if (environment.production) {
 const bootstrap = () => platformBrowserDynamic().bootstrapModule(AppModule);
 
 if (environment.hmr) {
-  hmrBootstrap(module, bootstrap);
+  import('@ngxs/hmr-plugin').then(plugin => {
+    plugin.hmr(module, bootstrap).catch((err: Error) => console.error(err));
+  });
 } else {
   bootstrap().catch((err) => console.error(err));
 }

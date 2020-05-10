@@ -5,8 +5,6 @@ export interface Nutrition {
   unit: string;
 }
 
-
-
 export interface UsageByCountry {
   AO: number;
   AT: number;
@@ -211,4 +209,71 @@ export interface HelloFreshListResponse<T> {
   count: number;
   total: number;
   items: T[];
+}
+
+
+export interface Preference {
+  preset: string;
+  recommended: number[];
+  other: number[];
+}
+
+export interface Cuisine {
+  id: string;
+  type: string;
+  name: string;
+  slug: string;
+  iconLink: string;
+  iconPath: string;
+  usage: number;
+}
+
+export interface Label {
+  text: string;
+  handle: string;
+  backgroundColor: string;
+  foregroundColor: string;
+}
+
+export interface ChargeSetting {
+  amount: number;
+  strategy: string;
+  reason: string;
+  flexibleAmounts?: any;
+  flexibleQuantities?: any;
+}
+
+export interface Cours {
+  index: number;
+  recipe: Recipe;
+  presets?: any;
+  selectionLimit?: any;
+  chargeSetting: ChargeSetting;
+  isSoldOut: boolean;
+}
+
+export interface WeeklyMenu {
+  id: string;
+  country: string;
+  product: string;
+  week: string;
+  headline: string;
+  mealSwapCombinationsText?: any;
+  mealSwapCombinations: any[];
+  serializedPreferences: string;
+  preferences: Preference[];
+  link: string;
+  isActive: boolean;
+  isComplete: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  clonedFrom?: any;
+  surveyTitle?: any;
+  surveyQuestion?: any;
+  surveyBody?: any;
+  surveyOptIn?: any;
+  rated: number;
+  averageRating: number;
+  courses: Cours[];
+  modularity: any[];
 }

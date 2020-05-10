@@ -8,9 +8,8 @@ describe('ColruytAddToBasketComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ColruytAddToBasketComponent ]
-    })
-    .compileComponents();
+      declarations: [ColruytAddToBasketComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

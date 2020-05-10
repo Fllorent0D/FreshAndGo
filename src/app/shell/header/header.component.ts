@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthenticationService, CredentialsService } from '@app/auth';
+import { Select, Store } from '@ngxs/store';
+import { ColruytState } from '@core/store/colruyt/colruyt.state';
+import { Observable } from 'rxjs';
+import { ColruytLogout } from '@core/store/colruyt/colruyt.action';
 
 @Component({
   selector: 'app-header',
@@ -10,12 +13,9 @@ import { AuthenticationService, CredentialsService } from '@app/auth';
 })
 export class HeaderComponent implements OnInit {
   menuHidden = true;
+  @Select(ColruytState.basketSize) basketSize: Observable<number>;
 
-  constructor(
-    private router: Router,
-    private authenticationService: AuthenticationService,
-    private credentialsService: CredentialsService
-  ) {}
+  constructor(private router: Router, private store: Store) {}
 
   ngOnInit() {}
 
@@ -24,11 +24,11 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    this.authenticationService.logout().subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
+    this.store.dispatch(new ColruytLogout()).subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
   }
 
   get username(): string | null {
-    const credentials = this.credentialsService.credentials;
+    const credentials = this.store.selectSnapshot(ColruytState);
     return credentials ? credentials.username : null;
   }
 }

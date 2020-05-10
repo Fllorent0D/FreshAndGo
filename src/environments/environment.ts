@@ -18,7 +18,8 @@ export const environment = {
   defaultLanguage: 'fr-FR',
   supportedLanguages: ['en-US', 'fr-FR'],
   helloFreshGW: '/hello-fresh',
-  colruytGW:'/colruyt'
+  helloFreshFE: '/hello-fe',
+  colruytGW: '/colruyt',
 };
 
 /*

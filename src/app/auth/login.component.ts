@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { finalize } from 'rxjs/operators';
+import { finalize, take, tap } from 'rxjs/operators';
 
 import { environment } from '@env/environment';
 import { Logger, untilDestroyed } from '@core';
-import { AuthenticationService } from './authentication.service';
+import { Actions, ofActionDispatched, ofActionSuccessful, Store } from '@ngxs/store';
+import { ColruytLogin } from '@core/store/colruyt/colruyt.action';
 
 const log = new Logger('Login');
 
@@ -24,7 +25,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private authenticationService: AuthenticationService
+    private actions: Actions,
+    private store: Store
   ) {
     this.createForm();
   }
@@ -35,14 +37,15 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   login() {
     this.isLoading = true;
-    const login$ = this.authenticationService.login(this.loginForm.value);
-    login$
+
+    this.store
+      .dispatch(new ColruytLogin(this.loginForm.value.username, this.loginForm.value.password))
       .pipe(
+        take(1),
         finalize(() => {
           this.loginForm.markAsPristine();
           this.isLoading = false;
-        }),
-        untilDestroyed(this)
+        })
       )
       .subscribe(
         (credentials) => {

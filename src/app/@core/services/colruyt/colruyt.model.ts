@@ -11,11 +11,12 @@ export interface ColruytStatus {
 export interface ColruytCogomwBoRestTreeBranch {
   id: string;
   description: string;
+  isLeave: string;
 }
 
 export enum ColruytUnit {
   PIECE = 'S',
-  KG = 'G'
+  KG = 'G',
 }
 
 export interface ColruytSearchItem {
@@ -58,6 +59,47 @@ export interface ColruytAddToBasketResponse {
   unit: string;
   quantity: string;
   lineTotalPrice: string;
+}
+
+export interface ColruytBasketArticle {
+  id: string;
+  brand: string;
+  description: string;
+  comment: string;
+  overviewImage: string;
+  unit: string;
+  quantity: string;
+  lineTotalPrice: string;
+  redPrice: boolean;
+  saleable: boolean;
+  unitPrice: string;
+  unitPriceUnit: string;
+  discountPrice: string;
+  discountPriceUnit: string;
+  discountQuantity: string;
+  discountSalableWeightCode: string;
+  discountSalableQuantity: string;
+}
+
+export interface ColruytBasketCategory {
+  'colruyt.cogomw.bo.RestTreeBranch': ColruytCogomwBoRestTreeBranch;
+  list: ColruytBasketArticle[];
+}
+
+export interface ColruytShowBasket {
+  '@class': string;
+  id: string;
+  subTotal: string;
+  depositeTotal: string;
+  serviceCost: string;
+  total: string;
+  size: number;
+  articles: ColruytBasketCategory[];
+}
+
+export interface ColruytOAuth {
+  '@class': string;
+  oAuth: string;
 }
 
 export interface ColruytResponse<T> {

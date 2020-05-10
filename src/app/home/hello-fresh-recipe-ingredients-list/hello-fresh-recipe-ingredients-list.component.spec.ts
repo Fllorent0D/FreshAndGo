@@ -8,9 +8,8 @@ describe('HelloFreshRecipeIngredientsListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HelloFreshRecipeIngredientsListComponent ]
-    })
-    .compileComponents();
+      declarations: [HelloFreshRecipeIngredientsListComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

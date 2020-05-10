@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { LOCALE_ID, NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { TranslateModule } from '@ngx-translate/core';
@@ -19,11 +19,13 @@ import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr-BE';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 registerLocaleData(localeFr, 'fr-BE');
 @NgModule({
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     ServiceWorkerModule.register('./ngsw-worker.js', { enabled: environment.production }),
     FormsModule,
     HttpClientModule,
@@ -31,6 +33,8 @@ registerLocaleData(localeFr, 'fr-BE');
     NgbModule,
     CoreModule,
     SharedModule,
+    ReactiveFormsModule,
+    FormsModule,
     ShellModule,
     HomeModule,
     AboutModule,
@@ -38,10 +42,12 @@ registerLocaleData(localeFr, 'fr-BE');
     AppRoutingModule, // must be imported as the last module as it contains the fallback route
   ],
   declarations: [AppComponent],
-  providers: [{
-    provide: LOCALE_ID,
-    useValue: 'fr-BE' // 'de-DE' for Germany, 'fr-FR' for France ...
-  }],
+  providers: [
+    {
+      provide: LOCALE_ID,
+      useValue: 'fr-BE', // 'de-DE' for Germany, 'fr-FR' for France ...
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

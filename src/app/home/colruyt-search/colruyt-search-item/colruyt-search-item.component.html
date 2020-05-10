@@ -1,19 +1,25 @@
-<div class="d-flex">
-    <img src="https://images.collectandgo.be/images/{{item.overviewImage}}"
-         class="align-self-start mr-3 flex-grow-1" [alt]="item.description">
-    <div class="flex-grow-2">
-        <h5 class="mt-0">{{item.description}}</h5>
-        <p>{{item.brand}}</p>
-        <p>{{item.price}}€/{{item.priceUnit}}</p>
-        <div *ngFor="let unit of item.units">
-            <app-colruyt-add-to-basket
-                    [defaultQuantity]="unit === 'S' ? 1 : item.defaultQuantity"
-                    [unit]="unit"
-                    [priceFn]="item.priceFunction"
-                    [unitPrice]="item.unitPrice"
-                    (addToBasket)="submit($event)"
-            ></app-colruyt-add-to-basket>
-        </div>
-
+<div class="container">
+  <div class="row">
+    <div class="col-4">
+      <img
+        src="https://images.collectandgo.be/images{{ item.overviewImage }}"
+        class="mx-auto d-block"
+        [alt]="item.description"
+      />
     </div>
+    <div class="col-8">
+      <h5 class="mt-0">{{ item.description }}</h5>
+      <p>{{ item.brand }}</p>
+      <p>{{ item.price }}€/{{ item.priceUnit }}</p>
+      <div *ngFor="let unit of item.units">
+        <app-colruyt-add-to-basket
+          [defaultQuantity]="unit === 'S' ? 1 : item.defaultQuantity"
+          [unit]="unit"
+          [priceFn]="item.priceFunction"
+          [unitPrice]="item.unitPrice"
+          (addToBasket)="submit($event)"
+        ></app-colruyt-add-to-basket>
+      </div>
+    </div>
+  </div>
 </div>

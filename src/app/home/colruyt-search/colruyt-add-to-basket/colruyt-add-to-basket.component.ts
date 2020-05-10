@@ -1,23 +1,20 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { ColruytUnit } from '@shared/colruyt/colruyt.model';
+import { ColruytUnit } from '@core/services/colruyt/colruyt.model';
 
 export interface ColruytQuantity {
   unit: ColruytUnit;
   quantity: number;
 }
 
-
 @Component({
   selector: 'app-colruyt-add-to-basket',
   templateUrl: './colruyt-add-to-basket.component.html',
-  styleUrls: ['./colruyt-add-to-basket.component.scss']
+  styleUrls: ['./colruyt-add-to-basket.component.scss'],
 })
 export class ColruytAddToBasketComponent implements OnInit {
-
   _defaultQuantity: number;
   _unitPrice: number;
-
 
   @Input() unit: ColruytUnit;
 
@@ -46,7 +43,7 @@ export class ColruytAddToBasketComponent implements OnInit {
     const quantity = this.input.value;
     switch (this.unit) {
       case ColruytUnit.PIECE:
-        const test = new Function('return ' + this.priceFn)()
+        const test = new Function('return ' + this.priceFn)();
         return test(quantity, this.unit);
         break;
       case ColruytUnit.KG:
@@ -54,7 +51,6 @@ export class ColruytAddToBasketComponent implements OnInit {
         break;
     }
   }
-
 
   add() {
     switch (this.unit) {
@@ -66,8 +62,6 @@ export class ColruytAddToBasketComponent implements OnInit {
         this.input.patchValue(this.input.value + 50);
         break;
     }
-
-
   }
 
   minus() {
@@ -83,20 +77,16 @@ export class ColruytAddToBasketComponent implements OnInit {
         this.input.patchValue(this.input.value - 50);
         break;
     }
-
   }
 
   ngOnInit(): void {
     this.input = new FormControl(this._defaultQuantity, [Validators.required]);
   }
 
-
-  submit(){
+  submit() {
     this.addToBasket.emit({
       quantity: this.input.value,
-      unit: this.unit
+      unit: this.unit,
     });
   }
-
-
 }

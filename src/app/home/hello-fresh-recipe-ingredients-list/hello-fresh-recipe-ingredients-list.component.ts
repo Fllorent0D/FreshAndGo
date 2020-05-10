@@ -1,13 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Ingredient, Recipe } from '@shared/hello-fresh/hello-fresh.models';
+import { Ingredient, Recipe } from '@core/services/hello-fresh/hello-fresh.models';
 
 @Component({
   selector: 'app-hello-fresh-recipe-ingredients-list',
   templateUrl: './hello-fresh-recipe-ingredients-list.component.html',
-  styleUrls: ['./hello-fresh-recipe-ingredients-list.component.scss']
+  styleUrls: ['./hello-fresh-recipe-ingredients-list.component.scss'],
 })
 export class HelloFreshRecipeIngredientsListComponent implements OnInit {
-
   @Input() activeRecipe: Recipe;
 
   get shippedIngredients(): Ingredient[] {
@@ -17,14 +16,13 @@ export class HelloFreshRecipeIngredientsListComponent implements OnInit {
   @Input() activeIngredient: Ingredient;
   @Output() ingredientsClicked: EventEmitter<Ingredient> = new EventEmitter<Ingredient>();
 
+  constructor() {}
 
-  constructor() {
-  }
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   getYieldsIngredient(ingredient: Ingredient, person: number) {
-    return this.activeRecipe.yields.find((y) => y.yields === person).ingredients.find(ing => ing.id === ingredient.id);
+    return this.activeRecipe.yields
+      .find((y) => y.yields === person)
+      .ingredients.find((ing) => ing.id === ingredient.id);
   }
 }

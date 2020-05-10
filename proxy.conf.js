@@ -17,10 +17,18 @@ const proxyConfig = [
   {
     context: '/hello-fresh',
     pathRewrite: { '^/hello-fresh': '' },
-    target: 'https://gw.hellofresh.com',
+    target: 'https://hellofresh.com/gw',
     changeOrigin: true,
     secure: false
-  },  {
+  },
+  {
+    context: '/hello-fe',
+    pathRewrite: { '^/hello-fe': '' },
+    target: 'https://www.hellofresh.be/',
+    changeOrigin: true,
+    secure: false
+  },
+  {
     context: '/colruyt',
     pathRewrite: { '^/colruyt': '' },
     target: 'https://cogomw.colruyt.be/cogomw/rest/fr/4/',

@@ -1,18 +1,34 @@
 <div class="list-group list-group-flush">
-    <a class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center"
-       *ngFor="let recipe of recipes"
-       (click)="recipeClicked.emit(recipe)"
-       [class.active]="recipe.id === activeRecipe?.id"
+    <a
+            class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+            *ngFor="let recipe of recipes"
+            (click)="recipeClicked.emit(recipe)"
+            [class.active]="recipe.id === activeRecipe?.id"
     >
         <div class="media">
-            <img src="https://img.hellofresh.com/c_fill,f_auto,fl_lossy,h_50,q_auto,w_50/hellofresh_s3{{recipe.imagePath}}"
-                 class="align-self-start mr-3" [alt]="recipe.label">
-            <div class="media-body">
-                <h5 class="mt-0">{{recipe.name}}</h5>
-                <p>{{recipe.headline}}</p>
-                <span class="badge ml-1" [ngClass]="{'badge-danger': tag.id === '594be44bc6243b76f8440332', 'badge-success': tag.id === '57d13370b7e8697d4b305317'}" *ngFor="let tag of recipe.tags">{{tag.name}}</span>
+            <img
+                    src="https://img.hellofresh.com/c_fill,f_auto,fl_lossy,h_50,q_auto,w_50/hellofresh_s3{{ recipe.imagePath }}"
+                    class="align-self-start mr-3"
+                    [alt]="recipe.label"
+            />
+            <div class="media-body" [class.text-white]="recipe.id === activeRecipe?.id">
+                <h5 class="mt-0">{{ recipe.name }}</h5>
+                <p>{{ recipe.headline }}</p>
+
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span
+                        class="badge ml-1"
+                        [ngClass]="{
+            'badge-danger': tag.id === '594be44bc6243b76f8440332',
+            'badge-success': tag.id === '57d13370b7e8697d4b305317'
+          }"
+                        *ngFor="let tag of recipe.tags"
+                >{{ tag.name }}</span>
             </div>
         </div>
     </a>
 </div>
-
