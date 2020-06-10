@@ -1,0 +1,35 @@
+<div class="container mt-2" *ngIf="basket && basket.articles">
+    <div class="row " *ngFor="let category of basket.articles">
+        <div class="col">
+            <h4>{{ category['colruyt.cogomw.bo.RestTreeBranch'].description }}</h4>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item" *ngFor="let article of category.list">
+                    <div class="row">
+                        <div class="col-3">
+                            <img
+                                    src="https://images.collectandgo.be/images{{ article.overviewImage }}"
+                                    style="max-height: 100px"
+                                    class="mx-auto img-fluid"
+                                    [alt]="article.description"
+                            />
+                        </div>
+                        <div class="col-4">
+                            <h5 class="mt-0">{{ article.description }}</h5>
+                            <p>{{ article.brand }}</p>
+                        </div>
+                        <div class="col-3">
+                            <h5>{{article.lineTotalPrice}}€</h5>
+                            <p class="small">{{ article.unitPrice }}€/{{ article.unitPriceUnit }}</p>
+                        </div>
+                        <div class="col-2">
+                            <button type="button" class="btn btn-danger"><span class="fa fa-trash"></span></button>
+
+                        </div>
+                    </div>
+
+                </li>
+            </ul>
+            <hr>
+        </div>
+    </div>
+</div>

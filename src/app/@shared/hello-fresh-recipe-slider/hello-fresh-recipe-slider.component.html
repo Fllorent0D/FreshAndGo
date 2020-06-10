@@ -1,0 +1,15 @@
+<ngu-carousel #carousel [inputs]="carouselTile" [dataSource]="recipes$ | async">
+  <ngu-tile *nguCarouselDef="let item; index as i; let ani = animate" class="tile pb-2">
+    <app-hello-fresh-recipe-card [recipe]="item" (cardClicked)="recipeClicked.emit($event)">
+    </app-hello-fresh-recipe-card>
+  </ngu-tile>
+  <ol class="carousel-indicators mt-3" NguCarouselPoint>
+    <li *ngFor="let i of carousel.pointNumbers" [class.active]="i == carousel.activePoint" class="mt-3"></li>
+  </ol>
+</ngu-carousel>
+<button class="leftRs btn btn-pill btn-primary" [disabled]="carousel.isFirst" #previousBtn>
+  <i class="fa fa-chevron-left"></i>
+</button>
+<button class="rightRs btn btn-pill btn-primary" [disabled]="carousel.isLast" #nextBtn>
+  <i class="fa fa-chevron-right"></i>
+</button>

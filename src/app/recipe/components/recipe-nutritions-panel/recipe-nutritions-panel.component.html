@@ -1,0 +1,29 @@
+<div class="card border-0">
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <h3>Valeurs nutritionnelles</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <ul class="nav nav-pills nav-fill">
+                    <li class="nav-item">
+                        <a class="nav-link" [class.active]="!display100g" (click)="display100g = false">Par portion</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [class.active]="display100g" (click)="display100g = true">Pour 100g</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col">
+                <div class="row mb-3" *ngFor="let nutrition of recipe.nutrition">
+                    <div class="col-8 font-weight-bold">{{ nutrition.name }}</div>
+                    <div class="col-4">{{ display100g ? for100g(nutrition.amount) : nutrition.amount }} {{ nutrition.unit }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

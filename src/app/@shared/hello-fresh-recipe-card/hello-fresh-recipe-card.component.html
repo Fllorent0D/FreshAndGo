@@ -1,0 +1,22 @@
+<div class="card h-100" (click)="cardClicked.emit(recipe)">
+  <img
+    class="card-img-top img-fluid"
+    src="https://img.hellofresh.com/f_auto,fl_lossy,q_auto,w_519/hellofresh_s3/{{ recipe.imagePath }}"
+  />
+  <div class="card-body d-flex flex-column">
+    <h5>{{ recipe.name }}</h5>
+    <p class="card-text flex-grow-1">{{ recipe.description }}</p>
+    <p class="card-text d-flex justify-content-between">
+      <small class="text-muted">
+        <span class="font-weight-bold">{{ getPrepTime() }} </span> | {{ totalkcal }} kcal</small
+      >
+      <small class="text-muted">
+        <ng-template #t let-fill="fill">
+          <span class="star" [class.full]="fill === 100">
+            <span class="half" [style.width.%]="fill">&hearts;</span>&hearts;
+          </span>
+        </ng-template>
+      </small>
+    </p>
+  </div>
+</div>

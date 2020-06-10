@@ -1,0 +1,16 @@
+<form>
+  <div class="form-group">
+    <input
+      type="text"
+      class="form-control form-control-lg"
+      id="exampleFormControlInput1"
+      placeholder="Rechercher une recette..."
+      name="search"
+      [(ngModel)]="input"
+      [typeahead]="suggestions$"
+      [typeaheadOptionField]="'name'"
+      (typeaheadOnSelect)="onSelect($event)"
+      [typeaheadWaitMs]="300"
+    />
+  </div>
+</form>

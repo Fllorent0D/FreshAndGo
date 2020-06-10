@@ -1,0 +1,70 @@
+<div class="container mt-3">
+  <div class="row">
+    <div class="col">
+      <app-search-recipe-input
+        [searchState]="searchState$ | async"
+        (searchResultSelected)="searchSelectedRecipe($event)"
+      ></app-search-recipe-input>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col"></div>
+  </div>
+  <div>
+    <div class="row">
+      <div class="col d-flex justify-content-between">
+        <h1>Rapides</h1>
+        <button class="btn btn-sm btn-link">Voir tout</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <app-hello-fresh-recipe-slider [recipes$]="quickRecipes$" (recipeClicked)="navigateToRecipe($event)">
+        </app-hello-fresh-recipe-slider>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="row">
+      <div class="col d-flex justify-content-between">
+        <h1>Populaires</h1>
+        <button class="btn btn-sm btn-link">Voir tout</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <app-hello-fresh-recipe-slider [recipes$]="popularRecipes$" (recipeClicked)="navigateToRecipe($event)">
+        </app-hello-fresh-recipe-slider>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="row">
+      <div class="col d-flex justify-content-between">
+        <h1>New</h1>
+        <button class="btn btn-sm btn-link">Voir tout</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <app-hello-fresh-recipe-slider [recipes$]="newRecipes$" (recipeClicked)="navigateToRecipe($event)">
+        </app-hello-fresh-recipe-slider>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="row">
+      <div class="col d-flex justify-content-between">
+        <h1>Recettes du monde</h1>
+      </div>
+    </div>
+    <ng-container *ngIf="cuisines$ | async as cuisines">
+      <app-cuisine-list
+        [cuisines]="cuisines.elements"
+        [isLoading]="cuisines.isLoading"
+        [isFailure]="cuisines.isFailure"
+        [isSuccess]="cuisines.isSuccess"
+      ></app-cuisine-list>
+    </ng-container>
+  </div>
+</div>

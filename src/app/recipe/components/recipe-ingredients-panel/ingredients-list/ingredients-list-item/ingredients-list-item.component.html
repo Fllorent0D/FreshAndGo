@@ -1,0 +1,15 @@
+<div class="row mb-2 align-items-center h-100">
+    <div class="col-3 mx-auto">
+        <img src="https://img.hellofresh.com/f_auto,fl_lossy,h_140,q_auto,w_140/hellofresh_s3/{{ingredient.imagePath}}"
+             class="img-circle img-fluid"/>
+    </div>
+    <div class="col-5 mx-auto">
+        <p class="font-weight-bold">{{ ingredient.name }}</p>
+        <p>{{ ingredientYieldReference?.amount }} {{ingredientYieldReference?.unit}}</p>
+    </div>
+    <div class="col-4 mx-auto">
+        <button class="btn btn-sm btn-outline-primary btn-pill" (click)="search()">
+            <i class="fa fa-search"></i> Colruyt
+        </button>
+    </div>
+</div>
