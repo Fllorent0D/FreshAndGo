@@ -17,7 +17,7 @@ const proxyConfig = [
   {
     context: '/hello-fresh',
     pathRewrite: { '^/hello-fresh': '' },
-    target: 'https://hellofresh.com/gw',
+    target: 'https://gw.hellofresh.com/api',
     changeOrigin: true,
     secure: false
   },

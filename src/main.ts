@@ -10,6 +10,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule } from '@app/app.module';
 import { environment } from '@env/environment';
 import { hmrBootstrap } from './hmr';
+import 'hammerjs';
 
 if (environment.production) {
   enableProdMode();
@@ -18,7 +19,7 @@ if (environment.production) {
 const bootstrap = () => platformBrowserDynamic().bootstrapModule(AppModule);
 
 if (environment.hmr) {
-  import('@ngxs/hmr-plugin').then(plugin => {
+  import('@ngxs/hmr-plugin').then((plugin) => {
     plugin.hmr(module, bootstrap).catch((err: Error) => console.error(err));
   });
 } else {

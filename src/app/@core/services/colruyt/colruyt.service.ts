@@ -41,14 +41,24 @@ export class ColruytService {
   ): Observable<ColruytAddToBasketResponse> {
     return this.httpClient
       .get<ColruytResponse<ColruytAddToBasketResponse>>(
-        environment.colruytGW +
-          `/basket/articles/add.json?id=${itemId}&weightCode=${unit}&quantity=${quantity}&comment=${comment}`
+        environment.colruytGW + `/basket/articles/add.json?id=${itemId}&weightCode=${unit}&quantity=${quantity}`
       )
       .pipe(map((response: ColruytResponse<ColruytAddToBasketResponse>) => response.data));
   }
 
   fetchBasket(): Observable<ColruytShowBasket> {
     return this.httpClient.get<ColruytResponse<ColruytShowBasket>>(environment.colruytGW + `/basket/show.json?`).pipe(
+      map((response: ColruytResponse<ColruytShowBasket>) => {
+        if (response.status.code === 0) {
+          return response.data;
+        }
+        throwError(new Error(response.status.meaning));
+      })
+    );
+  }
+
+  clearBasket(): Observable<ColruytShowBasket> {
+    return this.httpClient.get<ColruytResponse<ColruytShowBasket>>(environment.colruytGW + `/basket/clear.json?`).pipe(
       map((response: ColruytResponse<ColruytShowBasket>) => {
         if (response.status.code === 0) {
           return response.data;

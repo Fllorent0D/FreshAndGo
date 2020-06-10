@@ -28,8 +28,8 @@ export class ApiPrefixInterceptor implements HttpInterceptor {
       if (state.token) {
         request = request.clone({
           headers: new HttpHeaders({
-            'Authorization': `Bearer ${state.token}`
-          })
+            Authorization: `Bearer ${state.token}`,
+          }),
         });
       }
     }

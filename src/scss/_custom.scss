@@ -1,0 +1,45 @@
+// Here you can add other styles
+.img-cover {
+  object-fit: cover;
+  height: 400px;
+  width: 100%;
+  position: absolute;
+}
+
+.img-cover + .container {
+  padding-top: 18rem;
+}
+
+typeahead-container {
+  width: 97.5%;
+}
+
+aside-menu {
+  width: 400px;
+}
+
+.aside-menu-show .aside-overlay-bg {
+  position: fixed; /* Sit on top of the page content */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75); /* Black background with opacity */
+  z-index: 1000; /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer;
+  transition: 0.2s ease-in;
+}
+
+body:not(.aside-menu-show) .aside-menu-show {
+  display: none;
+  transition: opacity 1s ease-out;
+  opacity: 0;
+}
+
+@media (max-width: 991.98px) {
+  .app-body {
+    margin-top: 0;
+  }
+}

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ColruytQuantity } from '@app/home/colruyt-search/colruyt-add-to-basket/colruyt-add-to-basket.component';
+import { ColruytQuantity } from '@app/colruyt-search/components/colruyt-add-to-basket/colruyt-add-to-basket.component';
 import { ColruytSearchItem } from '@core/services/colruyt/colruyt.model';
 
 export interface ColruytAddToBasketItem {

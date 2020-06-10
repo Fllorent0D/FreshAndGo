@@ -21,6 +21,13 @@ import { ColruytState } from '@core/store/colruyt/colruyt.state';
 import { ColruytService } from '@core/services/colruyt/colruyt.service';
 import { HelloFreshService } from '@core/services/hello-fresh/hello-fresh.service';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { CuisineState } from '@core/store/recipe/cuisines/cuisine.state';
+import { HelloFreshSearchState } from '@core/store/recipe/search/search.state';
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
+import { FavoritesState } from '@core/store/recipe/favorites/favorites.state';
+import { NguCarouselModule } from '@ngu/carousel';
+import { BasketState } from '@core/store/colruyt/basket/basket.state';
+import { ColruytAuthInterceptor } from '@core/http/colruyt-auth.interceptor';
 
 @NgModule({
   imports: [
@@ -29,9 +36,12 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     HttpClientModule,
     TranslateModule,
     RouterModule,
-    NgxsModule.forRoot([HelloFreshState, ColruytState], {
-      developmentMode: !environment.production,
-    }),
+    NgxsModule.forRoot(
+      [HelloFreshState, CuisineState, ColruytState, HelloFreshSearchState, FavoritesState, BasketState],
+      {
+        developmentMode: !environment.production,
+      }
+    ),
     NgxsStoragePluginModule.forRoot(),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     ToastrModule.forRoot({
@@ -39,6 +49,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
     }),
+    NguCarouselModule,
   ],
   providers: [
     {
@@ -52,11 +63,16 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
       multi: true,
     },
     {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ColruytAuthInterceptor,
+      multi: true,
+    },
+    {
       provide: RouteReuseStrategy,
       useClass: RouteReusableStrategy,
     },
     ColruytService,
-    HelloFreshService
+    HelloFreshService,
   ],
 })
 export class CoreModule {

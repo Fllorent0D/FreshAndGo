@@ -55,6 +55,7 @@ export interface Ingredient {
   allergens: Allergen[];
   family: Family;
 }
+
 export interface Allergen {
   id: string;
   type: string;
@@ -121,7 +122,7 @@ export interface IngredientReference {
   unit: string;
 }
 
-export interface Yield {
+export interface  Yield {
   yields: number;
   ingredients: IngredientReference[];
 }
@@ -211,7 +212,6 @@ export interface HelloFreshListResponse<T> {
   items: T[];
 }
 
-
 export interface Preference {
   preset: string;
   recommended: number[];
@@ -276,4 +276,18 @@ export interface WeeklyMenu {
   averageRating: number;
   courses: Cours[];
   modularity: any[];
+}
+
+export interface HelloFreshSearchSuggestion {
+  title: string;
+  recipeId: string;
+  slug: string;
+  headline: string;
+  image: string;
+}
+
+export interface HelloFreshSearchSuggestionsResult {
+  group: string;
+  group_title: string;
+  items: HelloFreshSearchSuggestion[];
 }

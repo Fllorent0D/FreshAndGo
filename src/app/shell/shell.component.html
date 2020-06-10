@@ -1,4 +1,61 @@
-<div class="c-wrapper">
-    <app-header></app-header>
-    <router-outlet></router-outlet>
+<app-header
+        [navbarBrandRouterLink]="['/dashboard']"
+        [fixed]="true"
+        [asideMenuToggler]="false"
+        [sidebarToggler]="false"
+        [navbarBrandFull]="{ brandText: 'Fresh&Go', width: 89, height: 25, alt: 'Fresh&Go' }"
+        class="navbar"
+>
+    <ul class="nav navbar-nav d-md-down-none">
+        <li class="nav-item px-3">
+            <a class="nav-link" routerLink="/recettes" routerLinkActive="active">Recettes</a>
+        </li>
+        <li class="nav-item px-3">
+            <a class="nav-link" routerLink="/cogo" routerLinkActive="active">Collect&Go</a>
+        </li>
+    </ul>
+    <ul class="nav navbar-nav ml-auto">
+        <li class="nav-item dropdown" ngbDropdown placement="bottom right">
+            <a
+                    class="nav-link"
+                    data-toggle="dropdown"
+                    href="#"
+                    role="button"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    ngbDropdownToggle
+                    (click)="(false)"
+            >
+                {{ username }}
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu aria-labelledby="simple-dropdown">
+                <button class="dropdown-item" (click)="toggleTheme()" *ngIf="colorScheme === 'c-dark-theme'">
+                    <i class="fa fa-sun-o"></i> Light mode
+                </button>
+                <button class="dropdown-item" (click)="toggleTheme()" *ngIf="colorScheme === 'legacy-theme'">
+                    <i class="fa fa-moon-o"></i> Dark mode
+                </button>
+                <button class="dropdown-item" (click)="clearBasket()">
+                    <i class="fa fa-trash"></i> Vider panier Collect&Go
+                </button>
+                <div class="dropdown-divider"></div>
+                <button class="dropdown-item" (click)="logout()"><i class="fa fa-lock"></i> Logout</button>
+            </div>
+        </li>
+    </ul>
+    <button class="ml-1 mr-2 btn" appAsideMenuToggler>
+        <i class="fa fa-shopping-basket mr-2"> </i>{{ basketSize$ | async }} articles<span
+            class="badge bg-secondary ml-2">{{(basket$|async)?.total}}€</span>
+    </button>
+</app-header>
+<div class="app-body">
+    <main class="main">
+        <div class="aside-overlay-bg" appAsideMenuToggler></div>
+        <div class="container-fluid p-0">
+            <router-outlet></router-outlet>
+        </div>
+    </main>
+    <app-aside #aside [fixed]="false" [display]="display" [perfectScrollbar]="" [offCanvas]="true" [ngClass]="'test'">
+        <app-basket-aside [basket]="basket$ | async"></app-basket-aside>
+    </app-aside>
 </div>

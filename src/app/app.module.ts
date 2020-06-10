@@ -10,7 +10,6 @@ import { environment } from '@env/environment';
 import { CoreModule } from '@core';
 import { SharedModule } from '@shared';
 import { AuthModule } from '@app/auth';
-import { HomeModule } from './home/home.module';
 import { ShellModule } from './shell/shell.module';
 import { AboutModule } from './about/about.module';
 import { AppComponent } from './app.component';
@@ -20,6 +19,10 @@ import localeFr from '@angular/common/locales/fr-BE';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { RecipeModule } from '@app/recipe/recipe.module';
+import { FavoritesModule } from '@app/favorites/favorites.module';
+import { ColruytSearchModule } from '@app/colruyt-search/colruyt-search.module';
 
 registerLocaleData(localeFr, 'fr-BE');
 @NgModule({
@@ -27,18 +30,17 @@ registerLocaleData(localeFr, 'fr-BE');
     BrowserModule,
     BrowserAnimationsModule,
     ServiceWorkerModule.register('./ngsw-worker.js', { enabled: environment.production }),
-    FormsModule,
     HttpClientModule,
     TranslateModule.forRoot(),
     NgbModule,
     CoreModule,
     SharedModule,
-    ReactiveFormsModule,
-    FormsModule,
     ShellModule,
-    HomeModule,
     AboutModule,
     AuthModule,
+    RecipeModule,
+    ColruytSearchModule,
+    FavoritesModule,
     AppRoutingModule, // must be imported as the last module as it contains the fallback route
   ],
   declarations: [AppComponent],
