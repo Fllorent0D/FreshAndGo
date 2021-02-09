@@ -1,0 +1,49 @@
+<div class="container mt-3 overflow-hidden">
+  <app-loader [isLoading]="pageIsLoading$ | async"></app-loader>
+  <div class="row">
+    <ng-container
+      *ngFor="
+        let recipe of recipes$
+          | async
+          | paginate
+            : {
+                id: 'recipes',
+                itemsPerPage: itemsPerPage,
+                currentPage: (currentFilter$ | async).page + 1,
+                totalItems: totalItems$ | async
+              }
+      "
+    >
+      <div class="col-lg-3 col-md-6 col-xs-12 mb-3">
+        <app-hello-fresh-recipe-card [recipe]="recipe" (click)="navigateToRecipe(recipe)">
+        </app-hello-fresh-recipe-card>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <nav>
+        <pagination-template #p="paginationApi" [id]="'recipes'" (pageChange)="pageChanged($event)">
+          <ul class="pagination justify-content-center">
+            <li class="page-item" [class.disabled]="p.isFirstPage()">
+              <a class="page-link" *ngIf="!p.isFirstPage()" (click)="p.previous()" tabindex="-1" aria-disabled="true"
+                >Previous</a
+              >
+            </li>
+            <li class="page-item" *ngFor="let page of p.pages" [class.active]="p.getCurrent() === page.value">
+              <a class="page-link" (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">{{
+                page.label
+              }}</a>
+              <a class="page-link" *ngIf="p.getCurrent() === page.value">{{ page.label }}</a>
+            </li>
+
+            <li class="page-item" [class.disabled]="p.isLastPage()">
+              <a class="page-link" *ngIf="!p.isLastPage()" (click)="p.next()">Next</a>
+            </li>
+          </ul>
+        </pagination-template>
+      </nav>
+    </div>
+  </div>
+</div>
