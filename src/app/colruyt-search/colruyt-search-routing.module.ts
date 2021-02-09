@@ -9,20 +9,18 @@ import { ColruytSearchPageComponent } from '@app/colruyt-search/containers/colru
 
 const routes: Routes = [
   Shell.childRoutes([
-    { path: '', redirectTo: '/cogo', pathMatch: 'full' },
     {
       path: 'cogo',
       component: ColruytSearchPageComponent,
       canActivate: [AuthenticationGuard],
-      data: { title: extract('Colruyt') }
-    }
-  ])
+      data: { title: extract('Colruyt') },
+    },
+  ]),
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: []
+  providers: [],
 })
-export class ColruytSearchRoutingModule {
-}
+export class ColruytSearchRoutingModule {}

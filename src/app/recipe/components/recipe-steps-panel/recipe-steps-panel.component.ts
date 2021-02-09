@@ -4,14 +4,12 @@ import { Recipe } from '@core/services/hello-fresh/hello-fresh.models';
 @Component({
   selector: 'app-recipe-steps-panel',
   templateUrl: './recipe-steps-panel.component.html',
-  styleUrls: ['./recipe-steps-panel.component.scss']
+  styleUrls: ['./recipe-steps-panel.component.scss'],
 })
 export class RecipeStepsPanelComponent implements OnInit {
   @Input() recipe: Recipe;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

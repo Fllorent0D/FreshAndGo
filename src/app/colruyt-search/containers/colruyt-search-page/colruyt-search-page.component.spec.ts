@@ -8,9 +8,8 @@ describe('ColruytSearchPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ColruytSearchPageComponent ]
-    })
-    .compileComponents();
+      declarations: [ColruytSearchPageComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

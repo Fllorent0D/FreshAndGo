@@ -18,6 +18,7 @@ import {
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { BasketAsideComponent } from './basket-aside/basket-aside.component';
+import { LazyLoadImageModule } from 'ng-lazyload-image';
 
 @NgModule({
   imports: [
@@ -34,6 +35,7 @@ import { BasketAsideComponent } from './basket-aside/basket-aside.component';
     AppBreadcrumbModule,
     AppAsideModule,
     AppHeaderModule,
+    LazyLoadImageModule,
   ],
   declarations: [HeaderComponent, ShellComponent, BasketAsideComponent],
 })

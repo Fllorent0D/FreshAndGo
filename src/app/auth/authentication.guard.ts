@@ -13,14 +13,14 @@ const log = new Logger('AuthenticationGuard');
 export class AuthenticationGuard implements CanActivate {
   constructor(private router: Router, private store: Store) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+  async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     const isAuthenticated = this.store.selectSnapshot(ColruytState.isAuthenticated);
     if (isAuthenticated) {
       return true;
     }
 
     log.debug('Not authenticated, redirecting and adding redirect url...');
-    this.router.navigate(['/login'], { queryParams: { redirect: state.url }, replaceUrl: true });
+    this.router.navigate(['login'], { queryParams: { redirect: state.url }, replaceUrl: true });
     return false;
   }
 }

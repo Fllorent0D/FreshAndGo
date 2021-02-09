@@ -122,7 +122,7 @@ export interface IngredientReference {
   unit: string;
 }
 
-export interface  Yield {
+export interface Yield {
   yields: number;
   ingredients: IngredientReference[];
 }
@@ -158,7 +158,7 @@ export interface Recipe {
   id: string;
   name: string;
   seoName?: any;
-  category?: any;
+  category?: Category;
   slug: string;
   headline: string;
   description: string;
@@ -290,4 +290,62 @@ export interface HelloFreshSearchSuggestionsResult {
   group: string;
   group_title: string;
   items: HelloFreshSearchSuggestion[];
+}
+export interface Category {
+  id: string;
+  type: string;
+  name: string;
+  slug: string;
+  iconLink?: any;
+  iconPath: string;
+  usage: number;
+}
+
+export interface Preference {
+  preset: string;
+  recommended: number[];
+  other: number[];
+}
+
+export interface ChargeSetting {
+  amount: number;
+  strategy: string;
+  reason: string;
+  flexibleAmounts?: any;
+  flexibleQuantities?: any;
+}
+
+export interface Cours {
+  index: number;
+  recipe: Recipe;
+  presets?: any;
+  selectionLimit?: any;
+  chargeSetting: ChargeSetting;
+  isSoldOut: boolean;
+}
+
+export interface WeeklyBoxes {
+  id: string;
+  country: string;
+  product: string;
+  week: string;
+  headline: string;
+  mealSwapCombinationsText?: any;
+  mealSwapCombinations: any[];
+  serializedPreferences: string;
+  preferences: Preference[];
+  link: string;
+  isActive: boolean;
+  isComplete: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  clonedFrom?: any;
+  surveyTitle?: any;
+  surveyQuestion?: any;
+  surveyBody?: any;
+  surveyOptIn?: any;
+  rated: number;
+  averageRating: number;
+  courses: Cours[];
+  modularity: any[];
 }

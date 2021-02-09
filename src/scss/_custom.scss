@@ -43,3 +43,27 @@ body:not(.aside-menu-show) .aside-menu-show {
     margin-top: 0;
   }
 }
+
+.ng-lazyloaded {
+  animation: fadein 0.5s;
+}
+
+.ng-lazyloading {
+  position: relative;
+  background-color: #e2e2e2;
+  opacity: 0.6;
+  width: 100%;
+  height: 100%;
+  content: "";
+  border-radius: 20px;
+  text-indent: -9999px;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

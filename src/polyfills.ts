@@ -65,3 +65,4 @@ import '@angular/localize/init';
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+import 'first-input-delay';

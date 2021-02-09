@@ -11,7 +11,7 @@ import { ColruytSearchRoutingModule } from '@app/colruyt-search/colruyt-search-r
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ColruytSearchPageComponent } from './containers/colruyt-search-page/colruyt-search-page.component';
 import { ColruytSearchModalComponent } from './containers/colruyt-search-modal/colruyt-search-modal.component';
-
+import { LazyLoadImageModule } from 'ng-lazyload-image';
 
 @NgModule({
   declarations: [
@@ -19,7 +19,7 @@ import { ColruytSearchModalComponent } from './containers/colruyt-search-modal/c
     ColruytAddToBasketComponent,
     ColruytSearchItemComponent,
     ColruytSearchPageComponent,
-    ColruytSearchModalComponent
+    ColruytSearchModalComponent,
   ],
   imports: [
     CommonModule,
@@ -28,11 +28,9 @@ import { ColruytSearchModalComponent } from './containers/colruyt-search-modal/c
     SharedModule,
     ReactiveFormsModule,
     ColruytSearchRoutingModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    LazyLoadImageModule,
   ],
-  entryComponents: [
-    ColruytSearchModalComponent
-  ]
+  entryComponents: [ColruytSearchModalComponent],
 })
-export class ColruytSearchModule {
-}
+export class ColruytSearchModule {}

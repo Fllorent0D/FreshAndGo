@@ -7,7 +7,13 @@ export class AddRecipeInFavorite {
 }
 
 export class RemoveRecipeFromFavorite {
-  static readonly type = '[Favorite] Add favorite';
+  static readonly type = '[Favorite] Remove favorite';
+
+  constructor(public recipe: Recipe) {}
+}
+
+export class ToggleRecipeFromFavorite {
+  static readonly type = '[Favorite] Toggle favorite';
 
   constructor(public recipe: Recipe) {}
 }

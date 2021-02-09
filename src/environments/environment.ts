@@ -16,10 +16,20 @@ export const environment = {
   version: env.npm_package_version + '-dev',
   serverUrl: '/api',
   defaultLanguage: 'fr-FR',
-  supportedLanguages: ['en-US', 'fr-FR'],
+  supportedLanguages: ['fr-FR'],
   helloFreshGW: '/hello-fresh',
   helloFreshFE: '/hello-fe',
   colruytGW: '/colruyt',
+  firebase: {
+    apiKey: 'AIzaSyDFiaYo8GKshR4h11wj1Q6h5XQWilP9zS8',
+    authDomain: 'fresh-and-go.firebaseapp.com',
+    databaseURL: 'https://fresh-and-go.firebaseio.com',
+    projectId: 'fresh-and-go',
+    storageBucket: 'fresh-and-go.appspot.com',
+    messagingSenderId: '136926805345',
+    appId: '1:136926805345:web:7a44a3737f34f124531920',
+    measurementId: 'G-GL1DHHQZXL',
+  },
 };
 
 /*

@@ -37,13 +37,19 @@ export class FetchRecipeFailure {
   constructor(public recipeId: string) {}
 }
 
-export class FetchMoreRecipesForCategory {
+export class FetchRecipesForCategory {
   static readonly type = '[HelloFresh] fetch more recipes for category';
 
-  constructor(public category: RecipeCategory) {}
+  constructor(public category: RecipeCategory, public page: number) {}
 }
-export class FetchMoreRecipesForCategorySuccess {
+
+export class FetchRecipesForCategorySuccess {
   static readonly type = '[HelloFresh] fetch more recipes for category success';
 
-  constructor(public category: RecipeCategory, public currentPage: number, public recipes: Recipe[]) {}
+  constructor(
+    public category: RecipeCategory,
+    public page: number,
+    public totalPages: number,
+    public recipes: Recipe[]
+  ) {}
 }

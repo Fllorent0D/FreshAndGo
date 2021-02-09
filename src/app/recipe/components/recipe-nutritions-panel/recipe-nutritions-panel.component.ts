@@ -4,18 +4,16 @@ import { Recipe } from '@core/services/hello-fresh/hello-fresh.models';
 @Component({
   selector: 'app-recipe-nutritions-panel',
   templateUrl: './recipe-nutritions-panel.component.html',
-  styleUrls: ['./recipe-nutritions-panel.component.scss']
+  styleUrls: ['./recipe-nutritions-panel.component.scss'],
 })
 export class RecipeNutritionsPanelComponent implements OnInit {
   @Input() recipe: Recipe;
 
   display100g = false;
 
-  constructor() {
-  }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   for100g(amount: number) {
     const value = (amount / this.recipe.servingSize) * 100;
@@ -26,5 +24,4 @@ export class RecipeNutritionsPanelComponent implements OnInit {
 
     return Math.ceil(value);
   }
-
 }

@@ -1,34 +1,57 @@
-<img src="https://img.hellofresh.com/c_fit,f_auto,fl_lossy,h_1100,q_auto,w_2600/hellofresh_s3/{{ (recipe$ | async).imagePath }}"
-     class="img-cover"/>
-<div class="container">
+<div *ngIf="recipe$ | async as recipe; else loadingRecipe" #recipe id="my-node">
+  <img
+    lazyLoad="https://img.hellofresh.com/c_fit,f_auto,fl_lossy,h_1100,q_auto,w_2600/hellofresh_s3/{{
+      recipe.imagePath
+    }}"
+    class="img-cover"
+  />
+  <div class="container">
     <div class="row">
-        <div class="col">
-            <app-recipe-title-panel [recipe]="recipe$ | async"></app-recipe-title-panel>
-        </div>
+      <div class="col">
+        <app-recipe-title-panel
+          [recipe]="recipe"
+          [isFavorite]="isFavorite$ | async"
+          (toggleClicked)="toggleFavorite(recipe)"
+          (downloadClicked)="downloadRecipe()"
+        >
+        </app-recipe-title-panel>
+      </div>
     </div>
     <div class="row mt-2">
-        <div class="col-lg-8 col-sm-12">
-            <app-recipe-ingredients-panel
-                    [recipe]="recipe$ | async"
-                    (searchIngredient)="searchIngredient($event)"
-            ></app-recipe-ingredients-panel>
+      <div class="col-lg-8 col-sm-12">
+        <app-recipe-ingredients-panel
+          [recipe]="recipe"
+          (searchIngredient)="searchIngredient($event)"
+        ></app-recipe-ingredients-panel>
+      </div>
+      <div class="col-lg-4 col-sm-12">
+        <div class="row">
+          <div class="col">
+            <app-recipe-nutritions-panel [recipe]="recipe"></app-recipe-nutritions-panel>
+          </div>
         </div>
-        <div class="col-lg-4 col-sm-12">
-            <div class="row">
-                <div class="col">
-                    <app-recipe-nutritions-panel [recipe]="recipe$ | async"></app-recipe-nutritions-panel>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <app-recipe-ustencils-panel [recipe]="recipe$ | async"></app-recipe-ustencils-panel>
-                </div>
-            </div>
+        <div class="row">
+          <div class="col">
+            <app-recipe-ustencils-panel [recipe]="recipe"></app-recipe-ustencils-panel>
+          </div>
         </div>
+      </div>
     </div>
     <div class="row">
-        <div class="col">
-            <app-recipe-steps-panel [recipe]="recipe$ | async"></app-recipe-steps-panel>
-        </div>
+      <div class="col">
+        <app-recipe-steps-panel [recipe]="recipe"></app-recipe-steps-panel>
+      </div>
     </div>
+  </div>
 </div>
+<ng-template #loadingRecipe>
+  <div class="row mt-3">
+    <div class="col">
+      <div class="text-center">
+        <div class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -1,14 +1,15 @@
 <span class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-    <span class="btn-group btn-group-sm" role="group" aria-label="First group">
-        <button type="button" class="btn shadow-none"
-                *ngFor="let choice of choices"
-                [class.btn-outline-dark]="choice !== value"
-                [class.btn-dark]="choice === value"
-                (click)="peopleClicked(choice)">
-            {{choice}}
-            <i class="fa"
-               [class.fa-user]="choice === 1"
-               [class.fa-users]="choice > 1"></i>
-        </button>
-    </span>
+  <span class="btn-group btn-group-sm" role="group" aria-label="First group">
+    <button
+      type="button"
+      class="btn shadow-none"
+      *ngFor="let choice of choices"
+      [class.btn-outline-dark]="choice !== value"
+      [class.btn-dark]="choice === value"
+      (click)="peopleClicked(choice)"
+    >
+      {{ choice }}
+      <i class="fa" [class.fa-user]="choice === 1" [class.fa-users]="choice > 1"></i>
+    </button>
+  </span>
 </span>

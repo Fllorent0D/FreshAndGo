@@ -36,9 +36,9 @@ registerLocaleData(localeFr, 'fr-BE');
     CoreModule,
     SharedModule,
     ShellModule,
-    AboutModule,
-    AuthModule,
     RecipeModule,
+    AuthModule,
+    AboutModule,
     ColruytSearchModule,
     FavoritesModule,
     AppRoutingModule, // must be imported as the last module as it contains the fallback route
@@ -47,7 +47,7 @@ registerLocaleData(localeFr, 'fr-BE');
   providers: [
     {
       provide: LOCALE_ID,
-      useValue: 'fr-BE', // 'de-DE' for Germany, 'fr-FR' for France ...
+      useValue: 'fr-BE',
     },
   ],
   bootstrap: [AppComponent],

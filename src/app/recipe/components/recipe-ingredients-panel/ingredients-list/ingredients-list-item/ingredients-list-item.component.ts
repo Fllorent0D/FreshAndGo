@@ -6,7 +6,7 @@ import { SearchHelloFreshIngredient } from '@app/recipe/models/recipe.models';
   selector: 'app-ingredients-list-item',
   templateUrl: './ingredients-list-item.component.html',
   styleUrls: ['./ingredients-list-item.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IngredientsListItemComponent implements OnInit {
   @Input() ingredient: Ingredient;
@@ -14,17 +14,14 @@ export class IngredientsListItemComponent implements OnInit {
 
   @Output() searchIngredient: EventEmitter<SearchHelloFreshIngredient> = new EventEmitter<SearchHelloFreshIngredient>();
 
-  constructor() {
-  }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   search() {
     this.searchIngredient.emit({
       ingredient: this.ingredient,
-      yieldReference: this.ingredientYieldReference
+      yieldReference: this.ingredientYieldReference,
     });
   }
-
 }

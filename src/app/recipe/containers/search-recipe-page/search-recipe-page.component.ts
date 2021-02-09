@@ -20,6 +20,7 @@ import { SearchRecipe } from '@core/store/recipe/search/search.actions';
 import { Router } from '@angular/router';
 import { FetchRecipe, SaveRecipes } from '@core/store/recipe/hello-fresh.actions';
 import { untilDestroyed } from '@core';
+import { auth } from 'firebase/app';
 
 @Component({
   selector: 'app-search-recipe-page',
@@ -38,7 +39,6 @@ export class SearchRecipePageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     const store$ = this.store.select(HelloFreshState).pipe(untilDestroyed(this));
-
     this.quickRecipes$ = store$.pipe(
       filter((state: HelloFreshStateModel) => !!state.pagination[RecipeCategory.QUICK]?.pages[0]),
       map((state: HelloFreshStateModel) => {
@@ -63,13 +63,15 @@ export class SearchRecipePageComponent implements OnInit, OnDestroy {
   }
 
   searchSelectedRecipe(result: Recipe) {
-    this.store.dispatch(new SaveRecipes([result]));
+    // this.store.dispatch(new SaveRecipes([result]));
     this.navigateToRecipe(result);
   }
 
   navigateToRecipe(recipe: Recipe) {
-    this.router.navigate(['recettes', recipe.slug], { state: { data: { recipeId: recipe.id } } });
+    this.router.navigate(['recettes', recipe.slug, recipe.id]);
   }
 
   ngOnDestroy() {}
+
+  login() {}
 }

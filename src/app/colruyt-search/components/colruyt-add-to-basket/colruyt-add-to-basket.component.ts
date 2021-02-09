@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ColruytUnit } from '@core/services/colruyt/colruyt.model';
+import { PriceService } from '@shared/price/price.service';
 
 export interface ColruytQuantity {
   unit: ColruytUnit;
@@ -11,32 +12,38 @@ export interface ColruytQuantity {
   selector: 'app-colruyt-add-to-basket',
   templateUrl: './colruyt-add-to-basket.component.html',
   styleUrls: ['./colruyt-add-to-basket.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ColruytAddToBasketComponent implements OnInit {
   _defaultQuantity: number;
+  _discountPrice: number;
+  _discountQuantity: number;
   _unitPrice: number;
 
   @Input() unit: ColruytUnit;
 
   @Input() set defaultQuantity(defaultQuantity: string | number) {
-    if (typeof defaultQuantity === 'string') {
-      this._defaultQuantity = Number(defaultQuantity);
-    } else {
-      this._defaultQuantity = defaultQuantity;
-    }
+    this._defaultQuantity = PriceService.ParseNumber(defaultQuantity);
   }
 
   @Input() set unitPrice(unitPrice: string | number) {
-    if (typeof unitPrice === 'string') {
-      this._unitPrice = Number(unitPrice.replace(',', '.'));
-    } else {
-      this._unitPrice = unitPrice;
-    }
+    this._unitPrice = PriceService.ParseNumber(unitPrice);
   }
 
   @Input() priceFn: string;
+  @Input() displayDiscount = false;
+
+  @Input() set discountPrice(unitPrice: string | number) {
+    console.log('discount unit price', unitPrice);
+    this._discountPrice = PriceService.ParseNumber(unitPrice);
+  }
+
+  @Input() set discountQuantity(quantity: string | number) {
+    this._discountQuantity = PriceService.ParseNumber(quantity);
+  }
 
   @Output() addToBasket: EventEmitter<ColruytQuantity> = new EventEmitter<ColruytQuantity>();
+
   input: FormControl;
 
   get price() {
@@ -47,7 +54,11 @@ export class ColruytAddToBasketComponent implements OnInit {
         return test(quantity, this.unit);
         break;
       case ColruytUnit.KG:
-        return (quantity * this._unitPrice) / 1000;
+        if (quantity >= this._discountQuantity) {
+          return (quantity * this._discountPrice) / 1000;
+        } else {
+          return (quantity * this._unitPrice) / 1000;
+        }
         break;
     }
   }

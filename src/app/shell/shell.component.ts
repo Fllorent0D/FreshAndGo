@@ -7,12 +7,12 @@ import { Observable } from 'rxjs';
 import { BasketState, BasketStateModel } from '@core/store/colruyt/basket/basket.state';
 import { untilDestroyed } from '@core';
 import { map } from 'rxjs/operators';
-import { ColruytShowBasket } from '@core/services/colruyt/colruyt.model';
+import { ColruytBasketArticle, ColruytShowBasket } from '@core/services/colruyt/colruyt.model';
 import { AppSidebarComponent } from '@coreui/angular';
 import { AsideToggleDirective } from '@coreui/angular/lib/shared/layout/layout.directive';
 import { ClassToggler } from '@coreui/angular/lib/shared/toggle-classes';
 import { DOCUMENT } from '@angular/common';
-import { ColruytClearBasket } from '@core/store/colruyt/basket/basket.action';
+import { ColruytClearBasket, ColruytRemoveFromBasket } from '@core/store/colruyt/basket/basket.action';
 
 @Component({
   selector: 'app-shell',
@@ -32,7 +32,8 @@ export class ShellComponent implements OnInit, OnDestroy {
     private store: Store,
     private router: Router,
     private renderer: Renderer2,
-    @Inject(DOCUMENT) private document: Document) {}
+    @Inject(DOCUMENT) private document: Document
+  ) {}
 
   ngOnInit() {
     this.darkLightTheme();
@@ -56,7 +57,9 @@ export class ShellComponent implements OnInit, OnDestroy {
   }
 
   logout() {
-    this.store.dispatch(new ColruytLogout()).subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
+    this.store
+      .dispatch(new ColruytLogout(false))
+      .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
   }
 
   get username(): string | null {
@@ -79,5 +82,9 @@ export class ShellComponent implements OnInit, OnDestroy {
 
   clearBasket() {
     this.store.dispatch(new ColruytClearBasket());
+  }
+
+  removeFromBasket(article: ColruytBasketArticle) {
+    this.store.dispatch(new ColruytRemoveFromBasket([article.id]));
   }
 }

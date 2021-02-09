@@ -7,27 +7,24 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouteReusableStrategy } from './route-reusable-strategy';
 import { ApiPrefixInterceptor } from './http/api-prefix.interceptor';
 import { ErrorHandlerInterceptor } from './http/error-handler.interceptor';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxsModule } from '@ngxs/store';
 import { environment } from '@env/environment';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
-import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
-import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { HelloFreshState } from '@core/store/recipe/hello-fresh.state';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { ColruytState } from '@core/store/colruyt/colruyt.state';
 import { ColruytService } from '@core/services/colruyt/colruyt.service';
 import { HelloFreshService } from '@core/services/hello-fresh/hello-fresh.service';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { CuisineState } from '@core/store/recipe/cuisines/cuisine.state';
 import { HelloFreshSearchState } from '@core/store/recipe/search/search.state';
-import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { FavoritesState } from '@core/store/recipe/favorites/favorites.state';
 import { NguCarouselModule } from '@ngu/carousel';
 import { BasketState } from '@core/store/colruyt/basket/basket.state';
 import { ColruytAuthInterceptor } from '@core/http/colruyt-auth.interceptor';
+
+import { RatingModule } from 'ngx-bootstrap/rating';
 
 @NgModule({
   imports: [
@@ -47,9 +44,10 @@ import { ColruytAuthInterceptor } from '@core/http/colruyt-auth.interceptor';
     ToastrModule.forRoot({
       timeOut: 10000,
       positionClass: 'toast-bottom-right',
-      preventDuplicates: true,
+      preventDuplicates: false,
     }),
     NguCarouselModule,
+    RatingModule.forRoot(),
   ],
   providers: [
     {

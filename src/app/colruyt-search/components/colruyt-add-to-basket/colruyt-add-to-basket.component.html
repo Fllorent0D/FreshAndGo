@@ -1,27 +1,45 @@
-<div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
-  <div class="input-group mr-2">
-    <div class="input-group-prepend">
-      <button type="button" class="btn btn-secondary" (click)="minus()">-</button>
-    </div>
-    <input
-      [formControl]="input"
-      min="0"
-      [step]="unit === 'S' ? 1 : 50"
-      type="number"
-      class="form-control"
-      style="width: 80px;"
-      placeholder="Input group example"
-      aria-label="Input group example"
-      aria-describedby="btnGroupAddon"
-    />
-    <div class="input-group-append">
-      <div class="input-group-text" id="btnGroupAddon">{{ unit }}</div>
-      <button type="button" class="btn btn-secondary" (click)="add()">+</button>
+<div class="row">
+  <div class="col-md-8">
+    <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
+      <div class="input-group mr-2">
+        <div class="input-group-prepend">
+          <button type="button" class="btn btn-secondary" (click)="minus()">-</button>
+        </div>
+        <input
+          [formControl]="input"
+          min="0"
+          [step]="unit === 'S' ? 1 : 50"
+          type="number"
+          class="form-control"
+          style="width: 80px;"
+          placeholder="Input group example"
+          aria-label="Input group example"
+          aria-describedby="btnGroupAddon"
+        />
+        <div class="input-group-append">
+          <div class="input-group-text" id="btnGroupAddon">{{ unit }}</div>
+          <button type="button" class="btn btn-secondary" (click)="add()">+</button>
+        </div>
+      </div>
+      <div class="btn-group" role="group" aria-label="First group">
+        <button type="button" class="btn btn-success" (click)="submit()">
+          Ajouter au panier ({{ price | currency: 'EUR':'symbol-narrow' }})
+        </button>
+      </div>
     </div>
   </div>
-  <div class="btn-group" role="group" aria-label="First group">
-    <button type="button" class="btn btn-success" (click)="submit()">
-      Add to basket ({{ price | currency: 'EUR':'symbol-narrow' }})
-    </button>
+  <div class="col-md-4">
+    <div
+      *ngIf="displayDiscount"
+      [class.text-danger]="_discountQuantity > input.value"
+      [class.text-success]="_discountQuantity <= input.value"
+    >
+      <div class="row" *ngIf="unit === 'S'">
+        <div class="col">{{ _discountPrice }}€/pc à partir de {{ _discountQuantity }} pièces</div>
+      </div>
+      <div class="row" *ngIf="unit === 'G'">
+        <div class="col">{{ _discountPrice }}€/kg à partir de {{ _discountQuantity | unit: 'g':'kg' }} kg</div>
+      </div>
+    </div>
   </div>
 </div>

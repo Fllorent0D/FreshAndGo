@@ -6,19 +6,16 @@ import { SearchHelloFreshIngredient } from '@app/recipe/models/recipe.models';
   selector: 'app-ingredients-list',
   templateUrl: './ingredients-list.component.html',
   styleUrls: ['./ingredients-list.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IngredientsListComponent implements OnInit {
-
   @Input() ingredients: Ingredient[];
   @Input() yield: Yield;
   @Output() searchIngredient: EventEmitter<SearchHelloFreshIngredient> = new EventEmitter<SearchHelloFreshIngredient>();
 
-  constructor() {
-  }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   getYieldReference(ingredient: Ingredient): IngredientReference {
     const test = this.yield.ingredients.find((ing) => ing.id === ingredient.id);

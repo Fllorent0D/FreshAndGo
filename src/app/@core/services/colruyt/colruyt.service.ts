@@ -14,17 +14,11 @@ import {
   ColruytShowBasket,
   ColruytUnit,
 } from '@core/services/colruyt/colruyt.model';
-import { StateContext } from '@ngxs/store';
-import { ColruytStateModel } from '@core/store/colruyt/colruyt.state';
-import { ColruytLogin } from '@core/store/colruyt/colruyt.action';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ColruytService {
-  private oAuth =
-    'a3b256fc3a7f0777ca101de0c54df4b5a95269b59ca2ce09d05c4079510fe5e15c1c68c712e70776a9228c02126bd62f370f9e14a0c2df4b478f8a90b310a2c9';
-
   constructor(private httpClient: HttpClient) {}
 
   searchProduct(query: string): Observable<ColruytSearchItem[]> {
@@ -42,6 +36,14 @@ export class ColruytService {
     return this.httpClient
       .get<ColruytResponse<ColruytAddToBasketResponse>>(
         environment.colruytGW + `/basket/articles/add.json?id=${itemId}&weightCode=${unit}&quantity=${quantity}`
+      )
+      .pipe(map((response: ColruytResponse<ColruytAddToBasketResponse>) => response.data));
+  }
+
+  removeFromBasket(itemIds: string[]): Observable<ColruytAddToBasketResponse> {
+    return this.httpClient
+      .get<ColruytResponse<ColruytAddToBasketResponse>>(
+        environment.colruytGW + `/basket/articles/remove.json?articles_ids=${itemIds.join(',')}`
       )
       .pipe(map((response: ColruytResponse<ColruytAddToBasketResponse>) => response.data));
   }
@@ -68,10 +70,10 @@ export class ColruytService {
     );
   }
 
-  login(login: ColruytLogin): Observable<ColruytOAuth> {
+  login(login: string, password: string): Observable<ColruytOAuth> {
     return this.httpClient
       .get<ColruytResponse<ColruytOAuth>>(
-        environment.colruytGW + `/users/authenticate.json?logon_id=${login.username}&password=${login.password}`
+        environment.colruytGW + `/users/authenticate.json?logon_id=${login}&password=${password}`
       )
       .pipe(
         map((response: ColruytResponse<ColruytOAuth>) => {

@@ -1,35 +1,33 @@
 <div class="card border-0">
-    <div class="card-body">
-        <div class="row pb-3">
-            <div class="col-sm-4 col-xs-12">
-                <h3>Ingrédients</h3>
-            </div>
-            <div class="col-sm-8 col-xs-12">
-                <div class="pull-right">
-                    <app-people-input [formControl]="peopleFormControl"
-                                      [minimum]="minimumYield"
-                                      [maximum]="maximumYield">
-                    </app-people-input>
-                </div>
-            </div>
+  <div class="card-body">
+    <div class="row pb-3">
+      <div class="col-sm-4 col-xs-12">
+        <h3>Ingrédients</h3>
+      </div>
+      <div class="col-sm-8 col-xs-12">
+        <div class="pull-right">
+          <app-people-input [formControl]="peopleFormControl" [minimum]="minimumYield" [maximum]="maximumYield">
+          </app-people-input>
         </div>
-        <app-ingredients-list
-                [ingredients]="shippedIngredient"
-                [yield]="yield"
-                (searchIngredient)="searchIngredient.emit($event)"
-        >
-        </app-ingredients-list>
-        <hr/>
-        <div class="row">
-            <div class="col">
-                <h3>Ingrédients à avoir chez vous</h3>
-            </div>
-        </div>
-        <app-ingredients-list
-                [ingredients]="notShippedIngredient"
-                [yield]="yield"
-                (searchIngredient)="searchIngredient.emit($event)"
-        >
-        </app-ingredients-list>
+      </div>
     </div>
+    <app-ingredients-list
+      [ingredients]="shippedIngredient"
+      [yield]="yield"
+      (searchIngredient)="searchIngredient.emit($event)"
+    >
+    </app-ingredients-list>
+    <hr />
+    <div class="row">
+      <div class="col">
+        <h3>Ingrédients à avoir chez vous</h3>
+      </div>
+    </div>
+    <app-ingredients-list
+      [ingredients]="notShippedIngredient"
+      [yield]="yield"
+      (searchIngredient)="searchIngredient.emit($event)"
+    >
+    </app-ingredients-list>
+  </div>
 </div>

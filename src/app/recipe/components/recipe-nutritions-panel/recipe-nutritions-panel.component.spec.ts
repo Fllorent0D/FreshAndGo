@@ -8,9 +8,8 @@ describe('RecipeNutritionsPanelComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RecipeNutritionsPanelComponent ]
-    })
-    .compileComponents();
+      declarations: [RecipeNutritionsPanelComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

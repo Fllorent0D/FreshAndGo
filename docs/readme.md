@@ -1,4 +1,4 @@
-# ngX-Rocket
+# JusteUneConfession
 
 Welcome to the project documentation!
 

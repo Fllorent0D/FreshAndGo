@@ -9,7 +9,6 @@ import { FavoritesRecipePageComponent } from '@app/favorites/favorites-recipe-pa
 
 const routes: Routes = [
   Shell.childRoutes([
-    { path: '', redirectTo: '/favorites', pathMatch: 'full' },
     {
       path: 'favorites',
       component: FavoritesRecipePageComponent,

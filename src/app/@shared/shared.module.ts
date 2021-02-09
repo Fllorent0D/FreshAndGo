@@ -11,9 +11,21 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { HelloFreshRecipeCardComponent } from './hello-fresh-recipe-card/hello-fresh-recipe-card.component';
 import { HelloFreshRecipeSliderComponent } from './hello-fresh-recipe-slider/hello-fresh-recipe-slider.component';
 import { NguCarouselModule } from '@ngu/carousel';
+import { UnitPipe } from './unit-pipe/unit.pipe';
+import { RatingModule } from 'ngx-bootstrap/rating';
+import { FormsModule } from '@angular/forms';
+import { LazyLoadImageModule } from 'ng-lazyload-image';
 
 @NgModule({
-  imports: [CommonModule, NgxUiLoaderModule, NgxSkeletonLoaderModule, NguCarouselModule],
+  imports: [
+    CommonModule,
+    NgxUiLoaderModule,
+    NgxSkeletonLoaderModule,
+    NguCarouselModule,
+    RatingModule,
+    FormsModule,
+    LazyLoadImageModule,
+  ],
   declarations: [
     LoaderComponent,
     CuisineListComponent,
@@ -21,6 +33,7 @@ import { NguCarouselModule } from '@ngu/carousel';
     CuisineItemSkeletonComponent,
     HelloFreshRecipeCardComponent,
     HelloFreshRecipeSliderComponent,
+    UnitPipe,
   ],
   providers: [BsModalService],
   exports: [
@@ -29,6 +42,7 @@ import { NguCarouselModule } from '@ngu/carousel';
     CuisineListComponent,
     HelloFreshRecipeCardComponent,
     HelloFreshRecipeSliderComponent,
+    UnitPipe,
   ],
 })
 export class SharedModule {}

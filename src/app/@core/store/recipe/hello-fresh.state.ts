@@ -1,20 +1,18 @@
-import { Action, NgxsOnInit, Selector, State, StateContext } from '@ngxs/store';
+import { Action, createSelector, NgxsOnInit, State, StateContext } from '@ngxs/store';
 import { Injectable } from '@angular/core';
 import {
-  FetchMoreDetailsRecipeHelloFresh,
-  FetchMoreRecipesForCategory,
-  FetchMoreRecipesForCategorySuccess,
   FetchRecipe,
   FetchRecipeFailure,
+  FetchRecipesForCategory,
+  FetchRecipesForCategorySuccess,
   FetchRecipesHelloFresh,
   FetchTokenHelloFresh,
   SaveRecipes,
-  SetActiveRecipe,
 } from '@core/store/recipe/hello-fresh.actions';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 import { ColruytLoginSuccess, ColruytLogout } from '@core/store/colruyt/colruyt.action';
-import { Recipe } from '@core/services/hello-fresh/hello-fresh.models';
-import { HelloFreshService } from '@core/services/hello-fresh/hello-fresh.service';
+import { HelloFreshListResponse, Recipe } from '@core/services/hello-fresh/hello-fresh.models';
+import { HelloFreshService, TAKE_RECIPE_COUNT } from '@core/services/hello-fresh/hello-fresh.service';
 import { CuisineState } from '@core/store/recipe/cuisines/cuisine.state';
 import { FetchCuisines } from '@core/store/recipe/cuisines/cuisines.actions';
 import { HelloFreshSearchState } from '@core/store/recipe/search/search.state';
@@ -33,20 +31,20 @@ export interface RecipePage {
   isLoading: boolean;
 }
 
-export interface RecipePagination {
-  [category: string]: {
-    pages: {
-      [page: number]: RecipePage;
-    };
-    currentPage: number;
+export interface RecipeCategoryPages {
+  pages: {
+    [page: number]: RecipePage;
   };
+  totalPages?: number;
+}
+
+export interface RecipePagination {
+  [category: string]: RecipeCategoryPages;
 }
 
 export interface HelloFreshStateModel {
   token: string | null;
-  recipes: Recipe[];
   entities: { [key: string]: Recipe };
-  activeRecipe: string | null;
   pagination: RecipePagination;
 }
 
@@ -54,8 +52,6 @@ export interface HelloFreshStateModel {
   name: 'hellofresh',
   defaults: {
     token: null,
-    activeRecipe: null,
-    recipes: [],
     entities: {},
     pagination: {},
   },
@@ -63,23 +59,43 @@ export interface HelloFreshStateModel {
 })
 @Injectable()
 export class HelloFreshState implements NgxsOnInit {
-  @Selector()
-  static recipes(state: HelloFreshStateModel) {
-    return state.recipes;
+  static getRecipeCategory(category: RecipeCategory) {
+    return createSelector([HelloFreshState], (state: HelloFreshStateModel) => {
+      console.log(category);
+      return state.pagination[category];
+    });
   }
 
-  @Selector()
-  static activeRecipe(state: HelloFreshStateModel) {
-    return state.recipes.find((recipe) => recipe.id === state.activeRecipe);
+  static getRecipesByCategoryPerPage(category: RecipeCategory, page: number) {
+    return createSelector(
+      [HelloFreshState.getRecipeCategory(category), HelloFreshState],
+      (cat: RecipeCategoryPages, helloFreshState: HelloFreshStateModel) => {
+        console.log(category, cat);
+        if (!cat || !cat.pages[page]) {
+          return [];
+        }
+
+        return cat.pages[page].items.map((id) => helloFreshState.entities[id]);
+      }
+    );
+  }
+
+  static getCategoryPage(category: RecipeCategory, page: number) {
+    return createSelector([HelloFreshState.getRecipeCategory(category)], (cat: RecipeCategoryPages) => {
+      return cat.pages[page];
+    });
+  }
+
+  static getRecipeById(id: string) {
+    return createSelector([HelloFreshState], (state: HelloFreshStateModel) => {
+      return state.entities[id];
+    });
   }
 
   constructor(private helloFreshService: HelloFreshService) {}
 
   ngxsOnInit(ctx: StateContext<HelloFreshStateModel>) {
-    const state = ctx.getState();
-    if (state.recipes.length === 0) {
-      ctx.dispatch(new FetchRecipesHelloFresh());
-    }
+    console.log('Hello fresh state init');
   }
 
   @Action([FetchTokenHelloFresh, ColruytLoginSuccess])
@@ -92,28 +108,22 @@ export class HelloFreshState implements NgxsOnInit {
         ctx.dispatch([
           new FetchRecipesHelloFresh(),
           new FetchCuisines(),
-          new FetchMoreRecipesForCategory(RecipeCategory.QUICK),
-          new FetchMoreRecipesForCategory(RecipeCategory.POPULAR),
-          new FetchMoreRecipesForCategory(RecipeCategory.NEW),
+          new FetchRecipesForCategory(RecipeCategory.QUICK, 0),
+          new FetchRecipesForCategory(RecipeCategory.POPULAR, 0),
+          new FetchRecipesForCategory(RecipeCategory.NEW, 0),
         ]);
-      })
-    );
-  }
-
-  @Action(FetchRecipesHelloFresh)
-  fetchRecipes(ctx: StateContext<HelloFreshStateModel>) {
-    return this.helloFreshService.fetchWeeklyRecipes().pipe(
-      tap((recipes) => {
-        console.log(recipes);
-        ctx.patchState({
-          recipes,
-        });
       })
     );
   }
 
   @Action(FetchRecipe)
   fetchRecipe(ctx: StateContext<HelloFreshStateModel>, action: FetchRecipe) {
+    const state = ctx.getState();
+
+    if (state.entities[action.recipeId]) {
+      return;
+    }
+
     return this.helloFreshService.fetchRecipe(action.recipeId).pipe(
       switchMap((recipe) => ctx.dispatch(new SaveRecipes([recipe]))),
       catchError(() => ctx.dispatch(new FetchRecipeFailure(action.recipeId)))
@@ -133,31 +143,39 @@ export class HelloFreshState implements NgxsOnInit {
     });
   }
 
-  @Action(FetchMoreRecipesForCategory)
-  fetchRecipesForCategory(ctx: StateContext<HelloFreshStateModel>, action: FetchMoreRecipesForCategory) {
+  @Action(FetchRecipesForCategory)
+  fetchRecipesForCategory(ctx: StateContext<HelloFreshStateModel>, action: FetchRecipesForCategory) {
     const state = ctx.getState();
-    const category = cloneDeep(state.pagination[action.category]) || {
-      pages: {},
-      currentPage: null,
-    };
-    const currentPage = category?.currentPage;
-    const pageToLoad = currentPage ? currentPage + 1 : 0;
+    const category: RecipeCategoryPages = !!state.pagination[action.category]
+      ? {
+          pages: {
+            ...state.pagination[action.category].pages,
+          },
+          totalPages: state.pagination[action.category].totalPages,
+        }
+      : {
+          pages: {},
+        };
 
-    let call: Observable<Recipe[]>;
+    // TODO Change add timestamp to refresh gradually
+    if (category.pages[action.page]) {
+      return;
+    }
+
+    let call: Observable<HelloFreshListResponse<Recipe>>;
     switch (action.category) {
       case RecipeCategory.NEW:
-        call = this.helloFreshService.searchNewRecipes(pageToLoad);
+        call = this.helloFreshService.searchNewRecipes(action.page);
         break;
       case RecipeCategory.POPULAR:
-        call = this.helloFreshService.searchPopularRecipes(pageToLoad);
+        call = this.helloFreshService.searchPopularRecipes(action.page);
         break;
       case RecipeCategory.QUICK:
-        call = this.helloFreshService.searchQuickRecipe(pageToLoad);
+        call = this.helloFreshService.searchQuickRecipe(action.page);
         break;
     }
 
-    category.currentPage = pageToLoad;
-    category.pages[pageToLoad] = {
+    category.pages[action.page] = {
       items: [],
       isLoading: true,
     };
@@ -170,67 +188,53 @@ export class HelloFreshState implements NgxsOnInit {
     });
 
     return call.pipe(
-      switchMap((recipes) =>
-        ctx.dispatch(new FetchMoreRecipesForCategorySuccess(action.category, pageToLoad, recipes))
+      switchMap((response) =>
+        ctx.dispatch(
+          new FetchRecipesForCategorySuccess(
+            action.category,
+            action.page,
+            Math.ceil(response.total / TAKE_RECIPE_COUNT),
+            response.items
+          )
+        )
       ),
       catchError(() => of(null))
     );
   }
 
-  @Action(FetchMoreRecipesForCategorySuccess)
-  fetchRecipesForCategorySuccess(ctx: StateContext<HelloFreshStateModel>, action: FetchMoreRecipesForCategorySuccess) {
+  @Action(FetchRecipesForCategorySuccess)
+  fetchRecipesForCategorySuccess(ctx: StateContext<HelloFreshStateModel>, action: FetchRecipesForCategorySuccess) {
     const state = ctx.getState();
     const category = cloneDeep(state.pagination[action.category]);
 
-    category.pages[action.currentPage] = {
+    category.pages[action.page] = {
       items: action.recipes.map((recipe) => recipe.id),
       isLoading: false,
     };
+    category.totalPages = action.totalPages;
+
+    const newEntities: { [id: string]: Recipe } = action.recipes.reduce((acc, recipe) => {
+      acc[recipe.id] = recipe;
+      return acc;
+    }, {});
 
     ctx.patchState({
       pagination: {
         ...state.pagination,
         [action.category]: category,
       },
+      entities: {
+        ...state.entities,
+        ...newEntities,
+      },
     });
 
     return ctx.dispatch(new SaveRecipes(action.recipes));
   }
 
-  @Action(SetActiveRecipe)
-  setActiveRecipe(ctx: StateContext<HelloFreshStateModel>, action: SetActiveRecipe) {
-    const state = ctx.getState();
-    ctx.patchState({
-      activeRecipe: action.recipe.id,
-    });
-    if (!action.recipe.ingredients || action.recipe.ingredients.length === 0) {
-      ctx.dispatch(new FetchMoreDetailsRecipeHelloFresh(action.recipe));
-    }
-  }
-
-  @Action(FetchMoreDetailsRecipeHelloFresh)
-  fetchMoreDetailsRecipe(ctx: StateContext<HelloFreshStateModel>, action: FetchMoreDetailsRecipeHelloFresh) {
-    return this.helloFreshService.fetchRecipe(action.recipe.id).pipe(
-      tap((detailedRecipe) => {
-        const state = ctx.getState();
-        const recipes = state.recipes.map((recipe) => {
-          if (recipe.id === detailedRecipe.id) {
-            return detailedRecipe;
-          }
-          return recipe;
-        });
-        ctx.patchState({
-          recipes,
-        });
-      })
-    );
-  }
-
   @Action(ColruytLogout)
   logout(ctx: StateContext<HelloFreshStateModel>) {
     ctx.patchState({
-      activeRecipe: null,
-      recipes: [],
       entities: {},
       token: null,
       pagination: {},

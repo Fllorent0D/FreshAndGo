@@ -18,6 +18,10 @@ import { RecipeStepsPanelComponent } from './components/recipe-steps-panel/recip
 import { IngredientsListComponent } from './components/recipe-ingredients-panel/ingredients-list/ingredients-list.component';
 import { IngredientsListItemComponent } from './components/recipe-ingredients-panel/ingredients-list/ingredients-list-item/ingredients-list-item.component';
 import { PeopleInputComponent } from './components/recipe-ingredients-panel/people-input/people-input.component';
+import { CategoryPageComponent } from './containers/category-page/category-page.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { LazyLoadImageModule } from 'ng-lazyload-image';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -31,7 +35,8 @@ import { PeopleInputComponent } from './components/recipe-ingredients-panel/peop
     RecipeStepsPanelComponent,
     IngredientsListComponent,
     IngredientsListItemComponent,
-    PeopleInputComponent
+    PeopleInputComponent,
+    CategoryPageComponent,
   ],
   imports: [
     CommonModule,
@@ -42,7 +47,10 @@ import { PeopleInputComponent } from './components/recipe-ingredients-panel/peop
     NgbRatingModule,
     NgxSkeletonLoaderModule,
     TypeaheadModule.forRoot(),
-    NguCarouselModule]
+    NguCarouselModule,
+    InfiniteScrollModule,
+    LazyLoadImageModule,
+    NgxPaginationModule,
+  ],
 })
-export class RecipeModule {
-}
+export class RecipeModule {}

@@ -5,7 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { CoreModule } from '@core';
-import { AuthenticationService, CredentialsService } from '@app/auth';
+import { AuthenticationService, CredentialsService } from '@app/auth/index';
 import { MockAuthenticationService } from '@app/auth/authentication.service.mock';
 import { MockCredentialsService } from '@app/auth/credentials.service.mock';
 import { I18nModule } from '@app/i18n';

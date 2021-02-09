@@ -1,25 +1,25 @@
 <div class="card border-0">
-    <div class="card-body">
-        <div class="row">
-            <div class="col">
-                <h3>Recette</h3>
-            </div>
-        </div>
-        <div class="row mt-4" *ngFor="let step of recipe.steps">
-            <div class="col-3">
-                <img
-                        *ngIf="step.images[0]"
-                        src="https://img.hellofresh.com/c_fill,f_auto,fl_lossy,h_600,q_auto,w_1068/hellofresh_s3{{
-                  step.images[0].path
-                }}"
-                        class="card-img-top"
-                        alt="{{ step.images[0]?.caption }}"
-                />
-            </div>
-            <div class="col-9">
-                <h5 class="card-title" *ngIf="step.images[0]">{{ step.index }} . {{ step.images[0].caption }}</h5>
-                <p class="card-text">{{ step.instructions }}</p>
-            </div>
-        </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col">
+        <h3>Recette</h3>
+      </div>
     </div>
+    <div class="row mt-4" *ngFor="let step of recipe.steps">
+      <div class="col-3">
+        <img
+          *ngIf="step.images[0]"
+          lazyLoad="https://img.hellofresh.com/c_fill,f_auto,fl_lossy,h_600,q_auto,w_1068/hellofresh_s3{{
+            step.images[0].path
+          }}"
+          class="card-img-top"
+          alt="{{ step.images[0]?.caption }}"
+        />
+      </div>
+      <div class="col-9">
+        <h5 class="card-title" *ngIf="step.images[0]">{{ step.index }} . {{ step.images[0].caption }}</h5>
+        <p class="card-text">{{ step.instructions }}</p>
+      </div>
+    </div>
+  </div>
 </div>
